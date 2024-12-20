@@ -2,6 +2,7 @@
 import BlogTableItem from "@/Components/AdminComponents/BlogTableItem";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -12,8 +13,14 @@ const page = () => {
     setBlogs(response.data.blogs);
   };
 
-  const deleteBlog = async () => {
-    
+  const deleteBlog = async (mongoId) => {
+    const response = await axios.delete('/api/blog', {
+      params:{
+        id:mongoId
+      }
+    })
+    toast.success(response.data.msg);
+    fetchBlogs();
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -52,6 +59,7 @@ const page = () => {
                   author={item.author}
                   authorImg={item.authorImg}
                   date={item.date}
+                  deleteBlog={deleteBlog}
                 />
               );
             })}

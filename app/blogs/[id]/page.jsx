@@ -11,17 +11,17 @@ const page = ({ params }) => {
   const [data, setData] = useState(null);
 
   const fetchBlogData = async () => {
-    const response = await axios.get('/api/blog',{
-      params:{
-        id:params.id
-      }
-    })
+    const response = await axios.get("/api/blog", {
+      params: {
+        id: params.id,
+      },
+    });
     setData(response.data);
-  }
+  };
 
   useEffect(() => {
     fetchBlogData();
-  }, [])
+  }, []);
 
   return data ? (
     <>
@@ -36,7 +36,7 @@ const page = ({ params }) => {
             />
           </Link>
           <button className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-solid border-black shadow-[-7px_7px_0px_#000000]">
-            Get Started <Image src={assets.arrow} alt=''></Image>
+            Get Started <Image src={assets.arrow} alt=""></Image>
           </button>
         </div>
         <div className="text-center my-24">
@@ -63,8 +63,12 @@ const page = ({ params }) => {
           height={720}
           alt=""
         />
-        <h1 className="my-8 text-[26px] font-semibold">Introduction:</h1>
-        <p>{data.description}</p>
+
+        <div
+          className='blog-content'
+          dangerouslySetInnerHTML={{ __html: data.description }}
+        ></div>
+
         <div className="my-24">
           <p className="text-black font font-semibold my-4">
             Share this article if you find interesting.
